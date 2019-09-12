@@ -9,6 +9,38 @@ function add(a, b) {
     }
     return a + b;
 }
+function buttonPress(e) {
+    switch (e.target.name) {
+        case "button-clear":
+            break;
+        case "button-backspace":
+            break;
+        case "button-equals":
+            break;
+        case "button-decimal":
+            break;
+        case "button-plus":
+        case "button-minus":
+        case "button-times":
+        case "button-divide":
+            operatorPress(e.target);
+            break;
+        case "button1":
+        case "button2":
+        case "button3":
+        case "button4":
+        case "button5":
+        case "button6":
+        case "button7":
+        case "button8":
+        case "button9":
+        case "button0":
+            numberPress(e.target);
+            break;
+        default:
+            console.log(`Unhandled button pressed: ${e.target.name}`);
+    }
+}
 function divide(a, b) {
     if (typeof a != "number") {
         console.log(`Error in divide(): ${a} is not a number`);
@@ -49,6 +81,10 @@ function evaluateTerms(termArray) {
     }
     return termArray[0];
 }
+function getDisplayValue() {
+    let display = document.querySelector("#output");
+    return display.getAttribute("value");
+}
 function multiply(a, b) {
     if (typeof a != "number") {
         console.log(`Error in multiply(): ${a} is not a number`);
@@ -59,6 +95,15 @@ function multiply(a, b) {
         return "ERR";
     }
     return a * b;
+}
+function numberPress(button) {
+    let currentValue = getDisplayValue();
+    if (currentValue === "0") {
+        setDisplayValue(button.getAttribute("value"));
+    }
+    else {
+        setDisplayValue(currentValue + button.getAttribute("value"));
+    }
 }
 function operate(operator, a, b) {
     switch (operator) {
@@ -75,6 +120,20 @@ function operate(operator, a, b) {
             return "ERR";
     }
 }
+function operatorPress(button) {
+    let currentValue = getDisplayValue();
+    let lastEntry = currentValue.charAt(currentValue.length - 1)
+    if (lastEntry === "+" || lastEntry === "-" || lastEntry === "*" || lastEntry === "/") {
+        setDisplayValue(currentValue.slice(0, currentValue.length-1) + button.getAttribute("value"));
+    }
+    else {
+        setDisplayValue(currentValue + button.getAttribute("value"));
+    }
+}
+function setDisplayValue(value) {
+    let display = document.querySelector("#output");
+    display.setAttribute("value", value);
+}
 function subtract(a, b) {
     if (typeof a != "number") {
         console.log(`Error in subtract(): ${a} is not a number`);
@@ -86,3 +145,5 @@ function subtract(a, b) {
     }
     return a - b;
 }
+let buttons = document.querySelectorAll("button");
+buttons.forEach( (button) => button.addEventListener("click", buttonPress) );
