@@ -24,25 +24,30 @@ function divide(a, b) {
     return a / b;
 }
 function evaluateTerms(termArray) {
-    let nextTimesIndex = termArray.length;
-    let nextDivideIndex = termArray.length;
-    while (nextTimesIndex != -1 || nextDivideIndex != -1) {
-        nextTimesIndex = termArray.findIndex( (term) => term === "*");
-        nextDivideIndex = termArray.findIndex( (term) => term === "/");
-        let operatorIndex = (nextTimesIndex < nextDivideIndex) ? nextTimesIndex : nextDivideIndex;
-        let result = operate(termArray[operatorIndex], termArray[operatorIndex - 1], termArray[operatorIndex + 1]);
+    let multiplicationAndDivisionComplete = false;
+    let additionAndSubtractionComplete = false;
+    while (!(multiplicationAndDivisionComplete && additionAndSubtractionComplete)) {
+        let operatorIndex = (multiplicationAndDivisionComplete) ? 
+            termArray.findIndex( (term) => (term === "+" || term === "-") ) :
+            termArray.findIndex( (term) => (term === "*" || term === "/") );
+        if (operatorIndex === -1) {
+            if (multiplicationAndDivisionComplete) {
+                additionAndSubtractionComplete = true;
+            }
+            else {
+                multiplicationAndDivisionComplete = true;
+            }
+            continue;
+        }
+        let result = operate( termArray[operatorIndex], termArray[operatorIndex-1], termArray[operatorIndex+1] );
         termArray.splice(operatorIndex - 1, 3, result);
     }
-    let nextPlusIndex = termArray.length;
-    let nextMinusIndex =  termArray.length;
-    while (nextPlusIndex != -1 || nextMinusIndex != -1) {
-        nextPlusIndex = termArray.findIndex( (term) => term === "*");
-        nextMinusIndex = termArray.findIndex( (term) => term === "/");
-        let operatorIndex = (nextPlusIndex < nextMinusIndex) ? nextPlusIndex : nextMinusIndex;
-        let result = operate(termArray[operatorIndex], termArray[operatorIndex - 1], termArray[operatorIndex + 1]);
-        termArray.splice(operatorIndex - 1, 3, result);
+    if (termArray.length > 1) {
+        console.log(`Error in evaluateTerms(): final termArray has multiple arguments`);
+        console.log(termArray);
+        return "ERR";
     }
-    return termArray;
+    return termArray[0];
 }
 function multiply(a, b) {
     if (typeof a != "number") {
@@ -67,6 +72,7 @@ function operate(operator, a, b) {
             return divide(a, b);
         default:
             console.log(`Error in operate(): ${operator} is not a valid operator`)
+            return "ERR";
     }
 }
 function subtract(a, b) {
