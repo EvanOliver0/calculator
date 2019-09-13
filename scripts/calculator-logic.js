@@ -9,13 +9,20 @@ function add(a, b) {
     }
     return a + b;
 }
+function backspace() {
+    let value = getDisplayValue();
+    setDisplayValue(value.slice(0, -1));
+}
 function buttonPress(e) {
     switch (e.target.name) {
         case "button-clear":
+            clearAll();
             break;
         case "button-backspace":
+            backspace();
             break;
         case "button-equals":
+            computeResult();
             break;
         case "button-decimal":
             break;
@@ -40,6 +47,14 @@ function buttonPress(e) {
         default:
             console.log(`Unhandled button pressed: ${e.target.name}`);
     }
+}
+function clearAll() {
+    setDisplayValue("0");
+}
+function computeResult() {
+    let input = getDisplayValue();
+    let result = evaluateTerms(parseStringToTermArray(input));
+    setDisplayValue(result)
 }
 function divide(a, b) {
     if (typeof a != "number") {
@@ -85,6 +100,25 @@ function getDisplayValue() {
     let display = document.querySelector("#output");
     return display.getAttribute("value");
 }
+function isOperator(character) {
+    if (typeof character !== "string") {
+        console.log(`isOperator() expected string; ${character} is ${typeof character}`);
+        return false;
+    }
+    if (character.length > 1) {
+        console.log(`Multi-character string passed to isOperator(): ${character}`);
+        return false;
+    }
+    switch (character) {
+        case "+":
+        case "-":
+        case "*":
+        case "/":
+            return true;
+        default:
+            return false;
+    }
+}
 function multiply(a, b) {
     if (typeof a != "number") {
         console.log(`Error in multiply(): ${a} is not a number`);
@@ -129,6 +163,26 @@ function operatorPress(button) {
     else {
         setDisplayValue(currentValue + button.getAttribute("value"));
     }
+}
+function parseStringToTermArray(string) {
+    let termArray = [];
+    let digitSequence = "0";
+    for (let i=0; i < string.length; i++) {
+        let chr = string.charAt(i);
+        if (isOperator(chr)) {
+            termArray.push(+digitSequence);
+            termArray.push(chr);
+            digitSequence = "0";
+        }
+        else if (digitSequence === "0") {
+            digitSequence = chr;
+        }
+        else {
+            digitSequence += chr;
+        }
+    }
+    termArray.push(+digitSequence);
+    return termArray;
 }
 function setDisplayValue(value) {
     let display = document.querySelector("#output");
