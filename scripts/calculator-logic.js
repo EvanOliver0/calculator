@@ -25,6 +25,7 @@ function buttonPress(e) {
             computeResult();
             break;
         case "button-decimal":
+            decimalPress();
             break;
         case "button-plus":
         case "button-minus":
@@ -55,6 +56,12 @@ function computeResult() {
     let input = getDisplayValue();
     let result = evaluateTerms(parseStringToTermArray(input));
     setDisplayValue(result)
+}
+function decimalPress() {
+    let value = getDisplayValue();
+    if ( !(/\./.test(value)) ) {
+        setDisplayValue(value + ".");
+    }
 }
 function divide(a, b) {
     if (typeof a != "number") {
@@ -98,7 +105,7 @@ function evaluateTerms(termArray) {
 }
 function getDisplayValue() {
     let display = document.querySelector("#output");
-    return display.getAttribute("value");
+    return display.textContent;
 }
 function isOperator(character) {
     if (typeof character !== "string") {
@@ -178,7 +185,7 @@ function parseStringToTermArray(string) {
             digitSequence = chr;
         }
         else {
-            digitSequence += chr;
+        digitSequence += chr;
         }
     }
     termArray.push(+digitSequence);
@@ -186,7 +193,7 @@ function parseStringToTermArray(string) {
 }
 function setDisplayValue(value) {
     let display = document.querySelector("#output");
-    display.setAttribute("value", value);
+    display.textContent = value;
 }
 function subtract(a, b) {
     if (typeof a != "number") {
