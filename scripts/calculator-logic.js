@@ -1,9 +1,9 @@
 function add(a, b) {
-    if (typeof a != "number") {
+    if (typeof a != "number" || isNaN(a)) {
         console.log(`Error in add(): ${a} is not a number`);
         return "ERR";
     }
-    if (typeof b != "number") {
+    if (typeof b != "number" || isNaN(b)) {
         console.log(`Error in add(): ${b} is not a number`);
         return "ERR";
     }
@@ -64,11 +64,11 @@ function decimalPress() {
     }
 }
 function divide(a, b) {
-    if (typeof a != "number") {
+    if (typeof a != "number" || isNaN(a)) {
         console.log(`Error in divide(): ${a} is not a number`);
         return "ERR";
     }
-    if (typeof b != "number") {
+    if (typeof b != "number" || isNaN(a)) {
         console.log(`Error in divide(): ${b} is not a number`);
         return "ERR";
     }
@@ -127,11 +127,11 @@ function isOperator(character) {
     }
 }
 function multiply(a, b) {
-    if (typeof a != "number") {
+    if (typeof a != "number" || isNaN(a)) {
         console.log(`Error in multiply(): ${a} is not a number`);
         return "ERR";
     }
-    if (typeof b != "number") {
+    if (typeof b != "number" || isNaN(b)) {
         console.log(`Error in multiply(): ${b} is not a number`);
         return "ERR";
     }
@@ -196,11 +196,11 @@ function setDisplayValue(value) {
     display.textContent = value;
 }
 function subtract(a, b) {
-    if (typeof a != "number") {
+    if (typeof a != "number" || isNaN(a)) {
         console.log(`Error in subtract(): ${a} is not a number`);
         return "ERR";
     }
-    if (typeof b != "number") {
+    if (typeof b != "number" || isNaN(a)) {
         console.log(`Error in subtract(): ${b} is not a number`);
         return "ERR";
     }
