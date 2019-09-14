@@ -1,5 +1,28 @@
+body {
+    background-color: #272727;
+}
+button {
+    border: none;
+    font-size: 36px;
+    font-weight: bold;
+}
+.function-button {
+    color: #000;
+    background-color: #606070;
+}
+.number-button {
+    color: #E0E0D0;
+    background-color: #202030;
+}
+.operator-button {
+    color: #000;
+    background-color: #404060;
+}
 #calc-container {
+    background-color: #101010;
+    border: 2px solid #000;
     display: grid;
+    gap: 2px;
     grid-template: repeat(6, 1fr) / repeat(4, 1fr);
     height: 800px;
     margin: 100px auto;
@@ -60,5 +83,8 @@
     grid-area: 6 / 4 / span 1 / span 1;
 }
 #output {
+    color: #E0E0D0;
+    font-size: 36px;
     grid-area: 1 / 1 / span 1 / span 4;
+    text-align: right;
 }
