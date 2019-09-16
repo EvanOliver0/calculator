@@ -5,10 +5,6 @@ button {
     border: none;
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 48px;
-    font-weight: bold;
-}
-button:active {
-    background-color: white;
 }
 .function-button {
     color: #000;
