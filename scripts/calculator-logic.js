@@ -73,7 +73,8 @@ function divide(a, b) {
         return "ERR";
     }
     if (b === 0) {
-        return "KABOOM! Just kidding. Don't try to divide by zero, kids."
+        alert("KABOOM! Just kidding. Don't try to divide by zero, kids.");
+        return "Infinity";
     }
     return a / b;
 }
