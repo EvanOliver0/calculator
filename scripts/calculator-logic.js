@@ -126,6 +126,44 @@ function isOperator(character) {
             return false;
     }
 }
+function keyPress(e) {
+    console.log(e.key);
+    let button;
+    switch (e.key) {
+        case "1":
+        case "2":
+        case "3":
+        case "4":
+        case "5":
+        case "6":
+        case "7":
+        case "8":
+        case "9":
+        case "0":
+        case "+":
+        case "-":
+        case "*":
+        case "/":
+        case ".":
+            button = document.querySelector(`button[value="${e.key}"]`);
+            break;
+        case "Enter":
+        case "=":
+            button = document.querySelector("#button-equals");
+            break;
+        case "Backspace":
+            button = document.querySelector("#button-backspace");
+            break;
+        case "c":
+        case "C":
+        case "Delete":
+            button = document.querySelector("#button-clear");
+            break;
+    }
+    if (button) {
+        button.click();
+    }
+}
 function multiply(a, b) {
     if (typeof a != "number" || isNaN(a)) {
         console.log(`Error in multiply(): ${a} is not a number`);
@@ -208,3 +246,4 @@ function subtract(a, b) {
 }
 let buttons = document.querySelectorAll("button");
 buttons.forEach( (button) => button.addEventListener("click", buttonPress) );
+document.addEventListener("keydown", keyPress);
